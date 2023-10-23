@@ -5,13 +5,17 @@ from Errores.Errores import *
 
 reserverd = {
     'RCLAVES': 'Claves',
+    'RREGISTROS': 'Registros',
     'RIMPRIMIR': 'imprimir',
+    'RIMPIRMIRLN': 'imprimirln',
     'IGUAL': '=',
     'CORIZQ': '[',
     'CORDER': ']',
     'COMILLA': '"',
     'PARIZQ': '(',
     'PARDER': ')',
+    'PLLAVEIZ': '{',
+    'PLLAVEDE': '}',
     'COMA': ',',
     'PUNTOYCOMA': ';',
 }
@@ -34,7 +38,7 @@ def instruccion(cadena):
     global lista_lexemas
     lexema = ''
     puntero = 0
-    palabras_reservadas = ['Claves', 'imprimir']
+    palabras_reservadas = ['Claves', 'imprimir', 'Registros']
     while cadena:
         char = cadena[puntero]
         puntero += 1
@@ -63,7 +67,16 @@ def instruccion(cadena):
                 lista_lexemas.append(l)
                 n_columna += len(lexema) + 1
                 puntero = 0
-
+        
+        elif cadena.startswith("Registros"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'REGISTROS')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+                
         elif cadena.startswith("imprimir"):
             lexema, cadena = armar_lexema(cadena)
             if lexema and cadena:
@@ -73,6 +86,19 @@ def instruccion(cadena):
                 n_columna += len(lexema) + 1
                 puntero = 0
             l = Lexema('(', n_linea, n_columna, 'PARIZQ')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+            
+        elif cadena.startswith("imprimirln"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'IMPRIMIRLN')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+            l = Lexema('(', n_linea, n_columna, 'PARIZQ')#viene despues de la palabra reservada
             lista_lexemas.append(l)
             n_columna += 1
             puntero = 0
@@ -141,7 +167,7 @@ def instruccion(cadena):
             cadena = cadena[1:]
             puntero = 0
         else:
-            lista_errores.append(Errores(char, n_linea, n_columna))
+            lista_errores.append(Errores(char, "Léxico",n_linea, n_columna))
             cadena = cadena[1:]
             puntero = 0
             n_columna += 1

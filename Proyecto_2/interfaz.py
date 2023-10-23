@@ -44,7 +44,7 @@ def analizar():
                 lista_instrucciones.append(instrucciones_lenguaje)
             else:
                 break
-
+            
         # Ejecutar instrucciones
 
         for elemento in lista_instrucciones:
@@ -52,9 +52,15 @@ def analizar():
                 continue
             elif isinstance(elemento, Imprimir):
                 imprimir_consola += elemento.ejecutarT()
+            elif isinstance(elemento, Imprimirln):
+                imprimir_consola += elemento.ejecutarT()
+
 
         print(imprimir_consola)
-
+        for error in lista_errores:
+            print(error.operar(None))
+            
+        
         # Muestra el resultado en la consola de salida
         texto_salida.config(state='normal')
         texto_salida.delete(1.0, tk.END)
@@ -65,21 +71,6 @@ def analizar():
     except Exception as e:
         messagebox.showerror(f"Ocurrió un error al analizar el código: {str(e)}")
         print("Ocurrió un error al analizar el código: ", e)
-                
-
-'''def buscar_errores():
-    lista_errores = getErrores()
-    w = 1
-    resultado = "{\n"
-    while lista_errores:
-        error = lista_errores.pop(0)
-        resultado += error.operar(w) + "\n"
-        w += 1
-    resultado += "}"
-    texto.delete("1.0", tk.END)  # Limpia el contenido actual del widget de texto
-    texto.insert(tk.END, resultado)
-    messagebox.showinfo("Éxito", "El archivo se generó correctamente.")'''
-
 
 
 ventana = tk.Tk()
@@ -112,22 +103,14 @@ opciones.add_command(label="GUARDAR", font=("Century Gothic", 12),  background='
 opciones.add_command(label="GUARDAR COMO", font=("Century Gothic", 12),  background='#BFD4E0' , foreground="black", activebackground='#34619B' ,activeforeground='white', command=guardar_archivo)
 
 boton_analizar = tk.Button(banda_superior, font=("Century Gothic", 12), bg="#BFD4E0", text="ANALIZAR", command=analizar)
-'''boton_errores = tk.Button(banda_superior, font=("Century Gothic", 12), bg="#BFD4E0", text="ERRORES", command=buscar_errores)
-boton_reporte = tk.Button(banda_superior, font=("Century Gothic", 12),  bg="#BFD4E0", text="REPORTE", command=gh)'''
+boton_reporte = tk.Button(banda_superior, font=("Century Gothic", 12),  bg="#BFD4E0", text="REPORTE")
 boton_salir = tk.Button(banda_superior, font=("Century Gothic", 12), bg="#BFD4E0", text="SALIR", command=ventana.quit)
 
 
 btn_archivo.pack(side=tk.LEFT, padx=10, pady=10)
 boton_analizar.pack(side=tk.LEFT, padx=10, pady=10)
-'''boton_errores.pack(side=tk.LEFT, padx=10, pady=10)
-boton_reporte.pack(side=tk.LEFT, padx=10, pady=10)'''
+boton_reporte.pack(side=tk.LEFT, padx=10, pady=10)
 boton_salir.pack(side=tk.LEFT, padx=10, pady=10)
-
-
-
-
-
-
 
 
 contenedor_entrada = tk.Frame(ventana, bg="#627D9B")
