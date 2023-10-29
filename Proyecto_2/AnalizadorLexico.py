@@ -3,6 +3,7 @@ from Abstract.Lexema import *
 from Instrucciones.Texto import *
 from Errores.Errores import *
 
+
 reserverd = {
     'RCLAVES': 'Claves',
     'RREGISTROS': 'Registros',
@@ -34,11 +35,13 @@ global n_columna
 global instrucciones
 global lista_lexemas
 
+
 n_linea = 1
 n_columna = 1
 lista_lexemas = []
 instrucciones = []
 lista_errores = []
+
 
 def instruccion(cadena):
     global n_linea
@@ -178,7 +181,7 @@ def instruccion(cadena):
                 lista_lexemas.append(l)
                 n_columna += len(lexema) + 1
                 puntero = 0
- 
+
         
         elif cadena.startswith("sumar"):
             lexema, cadena = armar_lexema(cadena)
@@ -215,7 +218,7 @@ def instruccion(cadena):
                     num_tokens += 1
                     print(f"Token {num_tokens} - Tipo: Numero, Valor: {elemento.valor}, Fila: {elemento.fila}, Columna: {elemento.columna}")
 
-            
+                
                 
         elif cadena.startswith("reporte"):
             lexema, cadena = armar_lexema(cadena)
@@ -320,11 +323,7 @@ def instruccion(cadena):
             cadena = cadena[1:]
             puntero = 0
             n_columna += 1
-
-    return lista_lexemas
-
-def obtener_tokens(code):
-    # ... (tu código para analizar los tokens)
+            
     return lista_lexemas
 
 def armar_lexema(cadena):
@@ -362,3 +361,5 @@ def armar_numero(cadena):
             if char != ',': #! si no es una coma lo agregamos al numero
                 numero += char
     return None, None
+
+

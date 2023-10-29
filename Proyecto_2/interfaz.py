@@ -1,4 +1,5 @@
 import tkinter as tk
+import webbrowser
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
 from tkinter import Tk
@@ -8,7 +9,6 @@ from AnalizadorLexico import *
 from AnalizadorSintactico import *
 
 
-lista_elementos = []
 
 def abrir_archivo():
     x = ""
@@ -30,39 +30,50 @@ def guardar_archivo():
     if archivo:
         with open(archivo, 'w') as file:
             file.write(texto_entrada.get(1.0, tk.END))
+            
 
 def tokens():
-    
-    code = texto_entrada.get(1.0, tk.END)
-    lista_lexemas = obtener_tokens(code) 
+    codigo = texto_entrada.get(1.0, tk.END)
+    lista_lexemas = instruccion(codigo)
     # Abre un archivo HTML para escribir la tabla
-    with open("tokens.html", "w") as archivo_html:
-        # Escribe el encabezado HTML
+    with open("REPORTE DE TOKENS.html", "w") as archivo_html:
         archivo_html.write("<html>\n")
-        archivo_html.write("<head><title>Tokens Analizados</title></head>\n")
+        archivo_html.write("<head>")
+        archivo_html.write("<title>Reporte de Tokens</title>")
+        archivo_html.write("<style>")
+        archivo_html.write("table { border-collapse: collapse; width: 80%; margin: 20px auto; }")
+        archivo_html.write("th, td { border: 1px solid #333; padding: 8px; text-align: left; }")
+        archivo_html.write("th { background-color: #333; color: white; }")
+        archivo_html.write("tr:nth-child(even) { background-color: #f2f2f2; }")
+        archivo_html.write("tr:nth-child(odd) { background-color: #e6e6e6; }")
+        archivo_html.write("</style>")
+        archivo_html.write("</head>\n")
         archivo_html.write("<body>\n")
-        archivo_html.write("<h1>Tokens Analizados</h1>\n")
-        archivo_html.write("<table border='1'>\n")
-        archivo_html.write("<tr><th>Número</th><th>Tipo de Token</th><th>Lexema</th><th>Fila</th><th>Columna</th></tr>\n")
+        archivo_html.write("<h1 style='text-align: center;'>Reporte de Tokens</h1>\n")
+        archivo_html.write("<table>\n")
+        archivo_html.write("<tr><th>Número</th><th>Tipo</th><th>Lexema</th><th>Fila</th><th>Columna</th></tr>\n")
 
-        num_token = 0
+        num_tokens = 0
         for elemento in lista_lexemas:
+            archivo_html.write("<tr>")
+            num_tokens += 1
+            archivo_html.write(f"<td>{num_tokens}</td>")
             if isinstance(elemento, Lexema):
-                num_token += 1
-                archivo_html.write("<tr>")
-                archivo_html.write(f"<td>{num_token}</td>")
-                archivo_html.write(f"<td>{elemento.tipo}</td>")
-                archivo_html.write(f"<td>{elemento.lexema}</td>")
-                archivo_html.write(f"<td>{elemento.fila}</td>")
-                archivo_html.write(f"<td>{elemento.columna}</td>")
-                archivo_html.write("</tr>\n")
+                archivo_html.write(f"<td>{elemento.tipo}</td><td>{elemento.lexema}</td><td>{elemento.fila}</td><td>{elemento.columna}</td>")
+            elif isinstance(elemento, Numero):
+                archivo_html.write(f"<td>Numero</td><td>{elemento.valor}</td><td>{elemento.fila}</td><td>{elemento.columna}</td>")
+            archivo_html.write("</tr>\n")
 
-        # Cierra la tabla y el archivo HTML
         archivo_html.write("</table>\n")
         archivo_html.write("</body>\n")
         archivo_html.write("</html>\n")
+        
+    messagebox.showinfo("Reporte generado", "El reporte de tokens se generó exitosamente en el archivo 'REPORTE DE TOKENS.html'.")
+    webbrowser.open("REPORTE DE TOKENS.html")
 
-    messagebox.showinfo("Tabla Generada", "Se ha generado la tabla de tokens en el archivo 'tokens.html'.")
+
+def codigo():
+    pass
 
 def analizar():
     # Obtén el código del área de texto
@@ -163,7 +174,7 @@ boton_reporte = tk.Menubutton(banda_superior, text="REPORTE", font=("Century Got
 opciones = tk.Menu(boton_reporte,tearoff=0)
 boton_reporte["menu"] = opciones
 opciones.add_command(label="TOKENS", font=("Century Gothic", 12), background='#BFD4E0', foreground="black", activebackground='#34619B', activeforeground='white', command=tokens)
-opciones.add_command(label="ERRORES", font=("Century Gothic", 12),  background='#BFD4E0' , foreground="black" ,activebackground='#34619B', activeforeground='white')
+opciones.add_command(label="ERRORES", font=("Century Gothic", 12),  background='#BFD4E0' , foreground="black" ,activebackground='#34619B', activeforeground='white', command=codigo)
 opciones.add_command(label="ARBOL DE DERIVACION", font=("Century Gothic", 12),  background='#BFD4E0' , foreground="black", activebackground='#34619B' ,activeforeground='white')
 
 boton_salir = tk.Button(banda_superior, font=("Century Gothic", 12), bg="#BFD4E0", text="SALIR", command=ventana.quit)
