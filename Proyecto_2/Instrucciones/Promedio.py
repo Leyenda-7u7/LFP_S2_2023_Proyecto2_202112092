@@ -1,17 +1,16 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
+class Promedio(Expression):
 
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+    def __init__(self, texto, fila, columna):
+        self.texto = texto
         super().__init__(fila, columna)
 
     def operar(self, arbol):
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        return self.texto
 
     def getFila(self):
         return super().getFila()

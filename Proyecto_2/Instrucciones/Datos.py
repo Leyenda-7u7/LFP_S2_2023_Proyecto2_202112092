@@ -1,17 +1,16 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
-
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+class Datos(Expression):
+    def __init__(self, fila, columna):
         super().__init__(fila, columna)
 
     def operar(self, arbol):
+        # Lógica para imprimir registros
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        # Lógica para imprimir registros
+        pass
 
     def getFila(self):
         return super().getFila()

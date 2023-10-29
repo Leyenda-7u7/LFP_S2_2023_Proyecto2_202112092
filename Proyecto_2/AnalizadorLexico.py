@@ -6,8 +6,16 @@ from Errores.Errores import *
 reserverd = {
     'RCLAVES': 'Claves',
     'RREGISTROS': 'Registros',
+    'RCONTEO': 'conteo',
     'RIMPRIMIR': 'imprimir',
     'RIMPIRMIRLN': 'imprimirln',
+    'RPROMEDIO': 'promedio',
+    'RCONTARSI': 'contarsi',
+    'RDATOS': 'datos',
+    'RSUMAR': 'sumar',
+    'RMAX': 'max',
+    'RMIN': 'min',
+    'RREPORTE': 'reporte',
     'IGUAL': '=',
     'CORIZQ': '[',
     'CORDER': ']',
@@ -38,7 +46,10 @@ def instruccion(cadena):
     global lista_lexemas
     lexema = ''
     puntero = 0
-    palabras_reservadas = ['Claves', 'imprimir', 'Registros']
+    palabras_reservadas = ['Claves', 'imprimir', 'imprimirln', 'Registros', 'conteo', 'promedio']
+    
+
+        
     while cadena:
         char = cadena[puntero]
         puntero += 1
@@ -67,7 +78,16 @@ def instruccion(cadena):
                 lista_lexemas.append(l)
                 n_columna += len(lexema) + 1
                 puntero = 0
-        
+            l = Lexema('[', n_linea, n_columna, 'CORIZQ')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+            l = Lexema('=', n_linea, n_columna, 'IGUAL')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+
+                
         elif cadena.startswith("Registros"):
             lexema, cadena = armar_lexema(cadena)
             if lexema and cadena:
@@ -76,7 +96,16 @@ def instruccion(cadena):
                 lista_lexemas.append(l)
                 n_columna += len(lexema) + 1
                 puntero = 0
-                
+            l = Lexema('[', n_linea, n_columna, 'CORIZQ')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+            l = Lexema('=', n_linea, n_columna, 'IGUAL')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+            num_tokens = 0
+
         elif cadena.startswith("imprimir"):
             lexema, cadena = armar_lexema(cadena)
             if lexema and cadena:
@@ -98,11 +127,106 @@ def instruccion(cadena):
                 lista_lexemas.append(l)
                 n_columna += len(lexema) + 1
                 puntero = 0
-            l = Lexema('(', n_linea, n_columna, 'PARIZQ')#viene despues de la palabra reservada
+            l = Lexema('(', n_linea, n_columna, 'PARIZQ')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+            
+        elif cadena.startswith("conteo"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'CONTEO')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+            l = Lexema('(', n_linea, n_columna, 'PARIZQ')
+            lista_lexemas.append(l)
+            n_columna += 1
+            puntero = 0
+            
+
+        elif cadena.startswith("promedio"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'PROMEDIO')  
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+
+        
+        elif cadena.startswith("contarsi"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'CONTARSI')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+            l = Lexema('(', n_linea, n_columna, 'PARIZQ')
             lista_lexemas.append(l)
             n_columna += 1
             puntero = 0
 
+            
+        elif cadena.startswith("datos"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'DATOS')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+ 
+        
+        elif cadena.startswith("sumar"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'SUMAR')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+
+        elif cadena.startswith("max"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'MAX')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+
+        elif cadena.startswith("min"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'MIN')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+            num_tokens = 0
+            for elemento in lista_lexemas:
+                if isinstance(elemento, Lexema):  # Verificar si el elemento es un Lexema
+                    num_tokens += 1
+                    print(f"Token {num_tokens} - Tipo: {elemento.tipo}, Fila: {elemento.fila}, Columna: {elemento.columna}")
+                elif isinstance(elemento, Numero):  # Verificar si el elemento es un Numero
+                    num_tokens += 1
+                    print(f"Token {num_tokens} - Tipo: Numero, Valor: {elemento.valor}, Fila: {elemento.fila}, Columna: {elemento.columna}")
+
+            
+                
+        elif cadena.startswith("reporte"):
+            lexema, cadena = armar_lexema(cadena)
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'REPORTE')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+                puntero = 0
+
+                
         elif char.isdigit():
             token, cadena = armar_numero(cadena)
             if token and cadena:
@@ -113,6 +237,7 @@ def instruccion(cadena):
                 lista_lexemas.append(n)
                 n_columna += len(str(token)) + 1
                 puntero = 0
+            
 
         elif char == '[' or char == ']':
             # ! Armamos lexema como clase
@@ -145,9 +270,33 @@ def instruccion(cadena):
             cadena = cadena[1:]
             puntero = 0
             n_columna += 1
+        
+        elif char == '(':
+            lexema, cadena = armar_lexema(cadena[len(puntero):])
+            if lexema and cadena:
+                n_columna += 1
+                l = Lexema(lexema, n_linea, n_columna, 'PARIZQ')
+                lista_lexemas.append(l)
+                n_columna += len(lexema) + 1
+            n_columna += 1
+            puntero = ''
 
         elif char == ')':
             c = Lexema(char, n_linea, n_columna, 'PARDER')
+            lista_lexemas.append(c)
+            cadena = cadena[1:]
+            puntero = 0
+            n_columna += 1
+        
+        elif char == '{':
+            c = Lexema(char, n_linea, n_columna, 'PLLAVEIZ')
+            lista_lexemas.append(c)
+            cadena = cadena[1:]
+            puntero = 0
+            n_columna += 1
+            
+        elif char == '}':
+            c = Lexema(char, n_linea, n_columna, 'PLLAVEDE')
             lista_lexemas.append(c)
             cadena = cadena[1:]
             puntero = 0
@@ -174,6 +323,9 @@ def instruccion(cadena):
 
     return lista_lexemas
 
+def obtener_tokens(code):
+    # ... (tu código para analizar los tokens)
+    return lista_lexemas
 
 def armar_lexema(cadena):
     global n_linea
@@ -189,6 +341,7 @@ def armar_lexema(cadena):
         else:
             lexema += char   #! creamos nuestros Token
     return None, None
+
 
 def armar_numero(cadena):
     numero = ''

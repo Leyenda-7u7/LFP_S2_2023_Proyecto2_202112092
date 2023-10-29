@@ -1,17 +1,16 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
-
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+class Reporte(Expression):
+    def __init__(self, titulo, fila, columna):
+        self.titulo = titulo
         super().__init__(fila, columna)
 
     def operar(self, arbol):
+        # Lógica para generar el archivo HTML con el reporte
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        pass
 
     def getFila(self):
         return super().getFila()

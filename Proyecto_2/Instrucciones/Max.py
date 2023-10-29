@@ -1,17 +1,17 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
-
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+class Max(Expression):
+    def __init__(self, campo, fila, columna):
+        self.campo = campo
         super().__init__(fila, columna)
 
     def operar(self, arbol):
+        # Lógica para encontrar el valor máximo del campo
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        # Lógica para imprimir el valor máximo
+        pass
 
     def getFila(self):
         return super().getFila()

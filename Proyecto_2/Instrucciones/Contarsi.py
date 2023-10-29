@@ -1,17 +1,18 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
-
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+class Contarsi(Expression):
+    def __init__(self, campo, valor, fila, columna):
+        self.campo = campo
+        self.valor = valor
         super().__init__(fila, columna)
 
     def operar(self, arbol):
+        # Lógica para contar registros según el campo y valor
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        # Lógica para imprimir la cantidad de registros
+        pass
 
     def getFila(self):
         return super().getFila()

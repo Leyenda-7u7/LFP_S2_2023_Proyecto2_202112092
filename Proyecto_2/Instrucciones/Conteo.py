@@ -1,17 +1,16 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
-
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+class Conteo(Expression):
+    def __init__(self, fila, columna):
         super().__init__(fila, columna)
 
     def operar(self, arbol):
+        # Implementa la lógica de conteo aquí
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        # Implementa la ejecución de la instrucción aquí
+        pass
 
     def getFila(self):
         return super().getFila()

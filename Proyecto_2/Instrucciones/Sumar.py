@@ -1,17 +1,18 @@
 from Abstract.Abstract import Expression
 
-class DeclaracionClaves(Expression):
 
-    def __init__(self, nombre, elementos, fila, columna):
-        self.nombre = nombre
-        self.elementos = elementos
+class Sumar(Expression):
+    def __init__(self, campo, fila, columna):
+        self.campo = campo
         super().__init__(fila, columna)
 
     def operar(self, arbol):
+        # Lógica para sumar valores del campo
         pass
 
     def ejecutarT(self):
-        return self.elementos
+        # Lógica para imprimir la suma
+        pass
 
     def getFila(self):
         return super().getFila()
