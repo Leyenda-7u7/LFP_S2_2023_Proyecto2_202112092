@@ -133,27 +133,49 @@ Aquí en operaciones se define las operaciones a realizar todo esto fue posible 
 ### Palabras Reservadas:
 
 *Claves*
+
 *Registros*
+
 *conteo*
+
 *imprimir*
+
 *imprimirln*
+
 *promedio*
+
 *contarsi*
+
 *contar*
+
 *datos*
+
 *sumar*
+
 *max*
+
 *min*
+
 *exportarReporte*
+
 *(*
+
 *)*
+
 *[*
+
 *]*
+
 *{*
+
 *}*
+
 *,*
+
 *;*
+
 *=*
+
 *ID -> [a-z_A-Z_] [a-z_A-Z_0-9]*
 
 *NUMERO -> [0-9]+*
