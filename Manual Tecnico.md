@@ -109,7 +109,7 @@ Junto con esto se crearon la clase llamada un diccionario de palabras reservadas
 
 La clase tiene varios métodos, pero el principal es `Analizadorlexico`. Es método es el encargado de leer una lista de tokens que se le pasan como argumento, y de acuerdo a los comandos definidos en la lista "comandos", ejecuta distintas acciones dependiendo del comando reconocido en el token actual.
 
-Cada comando está definido como un método dentro de la clase cada una con su funcion las cuales son `CrearBD`, `EliminarBD`. Estos métodos ejecutan distintas acciones según el comando reconocido.
+Cada comando está definido como un método dentro de la clase cada una con su funcion las cuales son `Claves`, `Registros`. Estos métodos ejecutan distintas acciones según el comando reconocido.
 
 Se creo un método llamado `armar_lexema` aquí recorremos nuestra cadena y si leímos unas comillas se arma el lexema, para que no falle se retorna un None.
 
